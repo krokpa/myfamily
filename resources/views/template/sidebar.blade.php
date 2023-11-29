@@ -26,15 +26,26 @@
                 <span>Gestion des utilisateurs</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('manage_family') }}"> <i class="fas fa-fw fa-users"></i>
+                <span>Gestion de la famille</span>
+            </a>
+        </li>
+        
+    @endif
+   
+   
+    @if (session('userdata')->ROLE_Libelle == "user")
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('manage_family') }}"> <i class="fas fa-fw fa-users"></i>
+                <span>Gestion de la famille</span>
+            </a>
+        </li>
         
     @endif
 
-    
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('manage_family') }}"> <i class="fas fa-fw fa-users"></i>
-            <span>Gestion de la famille</span>
-        </a>
-    </li>
 
 </ul>
 <!-- End of Sidebar -->
