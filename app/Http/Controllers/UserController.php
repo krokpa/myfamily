@@ -9,6 +9,8 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -284,6 +286,118 @@ class UserController extends Controller
         ];
 
         return view('home.user-cars', $data);
+    }
+
+    public function userProfil(Request $request)
+    {
+        $USR_ID = session('userdata')->USR_ID;
+        $input = $request->all();
+
+        $user = User::where('USR_ID',$USR_ID) ->first();
+
+        if ($request->has('updateUser')) {
+
+            $utilisateur = User::find($user->USR_ID);
+            if(is_null($utilisateur)) return redirect()->back()->with('danger','Utilisateur introuvable.');
+
+            $validationMessages = [
+                'required' => 'Le/La :attribute est requis(e).',
+                'integer' => 'Veuillez saisir des nombres.',
+                'USR_Email.unique' => 'Cette adresse email est dejà utilisée, veuillez en utiliser une autre.'
+            ];
+
+            $validator = Validator::make($request->all(), [
+                'USR_Email' => ['required',Rule::unique('users','USR_Email')->ignore($utilisateur->USR_ID,'USR_ID'),]
+            ],$validationMessages);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            
+            if ($request->hasFile('USR_Photo')) {
+                $filename = ($user->USR_Photo == "") ? $user->USR_Nom.'.'.$request->USR_Photo->getClientOriginalExtension() : $user->USR_Photo;
+                $request->USR_Photo->storeAs('public/images/users/', $filename);
+            }else{
+                $filename = null;
+            }
+
+            if ($utilisateur->USR_Email != $input['USR_Email']) {
+                $utilisateur->USR_Email = $input['USR_Email'];
+            }
+            $utilisateur->USR_Nom = $input['USR_Nom'];
+            $utilisateur->USR_Prenom = $input['USR_Prenom'];
+            
+            if ($request->hasFile('USR_Photo')) {
+                $utilisateur->USR_Photo = $filename; 
+            }
+            
+            $updateResult = $user->save();
+
+            $user = $utilisateur;
+            session(['userdata'=>$user]);
+
+            if ($updateResult) {
+                return redirect()->route('userProfil')->with('success','Données utilisateur mises à jour.');
+            }
+            return redirect()->route('userProfil')->with('danger','Echec d\e mise à jour des données utilisateur, veuillez reéssayer.');
+            
+        }
+        
+        if ($request->has('changePassword')) {
+
+            $utilisateur = User::find($user->USR_ID);
+            if(is_null($utilisateur)) return redirect()->back()->with('danger','Utilisateur introuvable.');
+
+            $validationMessages = [
+                'required' => 'Le/La :attribute est requis(e).',
+                'numeric' => 'Veuillez saisir des nombres.',
+                'digits_between' => 'Le :attribute doit etre compris entre 4 et 8 caractères.',
+                'max' => 'Le :attribute doit etre inférieur ou égal à 8.',
+                'OldPassword.required' => 'Veuillez entrer l\'ancien mot de passe.',
+                'NewPassword.required' => 'Veuillez entrer le nouveau mot de passe.',
+                'ConfirmPassword.required' => 'Veuillez confirmer le nouveau mot de passe.',
+            ];
+
+            $validator = Validator::make($request->all(), [
+                'OldPassword' => ['required','numeric','digits_between:4,8'],
+                'NewPassword' => ['required','numeric','digits_between:4,8'],
+                'ConfirmPassword' => ['required','numeric','digits_between:4,8'],
+            ],$validationMessages);
+
+            if ($validator->fails()) {
+                return redirect()->route('userProfil')->withErrors($validator)->withInput();
+            }
+            
+            $checkpassword = Hash::check($input['OldPassword'], $user->USR_Password);
+            
+            if (!$checkpassword) {
+                return redirect()->back()->with('danger','L\'ancien mot de passe est incorrect.')->withInput();
+            }
+            
+            if ($input['NewPassword'] != $input['ConfirmPassword']) {
+                return redirect()->back()->with('danger','La confirmation du mot de passe est incorrecte.')->withInput();
+            }
+
+            $utilisateur->USR_Password = $input['NewPassword'];
+            $updateResult = $utilisateur->save();
+
+            if ($updateResult) {
+                return redirect()->route('userProfil')->with('success','Mot de passe modifié avec succès.');
+            }
+            return redirect()->route('userProfil')->with('danger','Echec de modification du mot de passe, veuillez reéssayer.');
+            
+        }
+        
+        $data = [
+            
+            'user'=>$user,
+            'input'=>$input,
+            'breadcrumbs'=>$request->segments(),
+
+        ];
+
+        return view('home.user_profil', $data);
+        
     }
     
 

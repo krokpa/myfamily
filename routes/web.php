@@ -31,3 +31,6 @@ Route::post('family', [UserController::class,'family'])->name('manage_family_pos
 
 Route::get('user/cars/{id}', [UserController::class,'userCars'])->name('manage_user_cars')->middleware('authenticated');
 Route::post('user/cars/{id}', [UserController::class,'userCars'])->name('manage_user_cars_post')->middleware('authenticated');
+
+Route::get('user/profil', [UserController::class,'userProfil'])->name('userProfil')->middleware('authenticated');
+Route::post('user/profil', [UserController::class,'userProfil'])->name('userProfil_post')->middleware('authenticated');
