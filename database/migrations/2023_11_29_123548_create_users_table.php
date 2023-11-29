@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('USR_ID', true);
             $table->string('USR_Nom', 50);
             $table->string('USR_Prenom', 100);
+            $table->string('USR_Photo', 100);
             $table->string('USR_Email', 50)->unique('USR_Email');
             $table->string('USR_Password');
             $table->integer('ROLE_ID')->index('ROLE_ID');

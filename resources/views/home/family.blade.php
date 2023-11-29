@@ -166,8 +166,7 @@
                                                     <td>{{ $FamilyMemberCars->car->CAR_TypeMoteur }}</td>
                                                     <td></td>
                                                     <td>
-                                                        <a data-toggle="modal" data-target="#modal-update-car-{{ $FamilyMemberCars->car->CAR_ID }}" data-placement="top" data-original-title="Modifier" href=""> <i class="fa fa-edit"></i> </a>
-                                                        <a data-toggle="tooltip" data-placement="top" data-original-title="Modifier" href="?del=true&carid={{ $FamilyMemberCars->car->CAR_ID }}"> <i class="fa fa-trash"></i> </a>
+                                                        <a data-toggle="tooltip" data-placement="top" data-original-title="Modifier" href="?delcar=true&carid={{ $FamilyMemberCars->car->CAR_ID }}&famid={{ $FamilyMemberCars->FAM_ID }}"> <i class="fa fa-trash"></i> </a>
                                                     </td>
                                                 </tr>
                                             @empty

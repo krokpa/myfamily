@@ -163,8 +163,19 @@ class UserController extends Controller
 
                     return redirect()->route('manage_family')->with('success','Le véhicule a été attribué.')->withInput();
                 }
-                return redirect()->route('manage_family')->with('danger','Echec de création du véhicule.')->withInput();
+                return redirect()->route('manage_family')->with('danger','Echec, véhicule dejà attribué.')->withInput();
 
+            }
+
+            if($request->has('delcar')){
+               
+                $deleteResult = FamilyMemberCars::where('CAR_ID',$input['carid'])->where('FAM_ID',$input['famid'])->delete();
+    
+                if ($deleteResult) {
+                    return redirect()->route('manage_family')->with('success','le véhicule a été retiré.')->withInput();
+                }
+                return redirect()->route('manage_family')->with('danger','Echec de la suppression du véhicule.')->withInput();
+    
             }
            
 
