@@ -114,8 +114,11 @@
                 </h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="{{ asset('assets') }}/img/undraw_profile_1.svg"
-                            alt="...">
+                        @if ($user->USR_Photo == "" || $user->USR_Photo == null)
+                            <img class="rounded-circle" src="{{ asset('assets') }}/img/undraw_profile_1.svg" alt="...">                        
+                        @else
+                            <img class="rounded-circle" src="{{ asset('storage/images/users/'.$user->USR_Photo) }}" alt="...">
+                        @endif
                         <div class="status-indicator bg-success"></div>
                     </div>
                     <div class="font-weight-bold">
@@ -170,9 +173,12 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                <img class="img-profile rounded-circle"
-                    src="{{ asset('assets') }}/img/undraw_profile.svg">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{  session('userdata')->USR_Nom }} {{  session('userdata')->USR_Prenom }}</span>
+                @if ($user->USR_Photo == "" || $user->USR_Photo == null)
+                    <img class="img-profile rounded-circle" src="{{ asset('assets') }}/img/undraw_profile.svg" alt="...">                        
+                @else
+                    <img class="img-profile rounded-circle" src="{{ asset('storage/images/users/'.$user->USR_Photo) }}" alt="...">
+                @endif
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

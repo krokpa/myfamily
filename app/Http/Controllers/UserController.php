@@ -342,6 +342,7 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
+
             
             if ($request->hasFile('USR_Photo')) {
                 $filename = ($user->USR_Photo == "") ? $user->USR_Nom.'.'.$request->USR_Photo->getClientOriginalExtension() : $user->USR_Photo;
@@ -349,7 +350,8 @@ class UserController extends Controller
             }else{
                 $filename = null;
             }
-
+            
+            //dd($filename);
             if ($utilisateur->USR_Email != $input['USR_Email']) {
                 $utilisateur->USR_Email = $input['USR_Email'];
             }
@@ -360,7 +362,7 @@ class UserController extends Controller
                 $utilisateur->USR_Photo = $filename; 
             }
             
-            $updateResult = $user->save();
+            $updateResult = $utilisateur->save();
 
             $user = $utilisateur;
             session(['userdata'=>$user]);

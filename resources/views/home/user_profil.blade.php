@@ -27,7 +27,7 @@
                     <div class="col-auto profile-image">
                         <a href="#">
                             @if ($user->USR_Photo == "" || $user->USR_Photo == null)
-                                <img data-toggle="modal" href="#" data-target="#modalUpdateUser_{{ $user->USR_ID }}" style="width: 120px;height:120px;" class="rounded-circle" src="{{ asset('assets') }}/images/avtar/{{ $user->USR_Gender == 'male' ? 'user.png' : 'woman.png' }}" alt="">
+                                <img data-toggle="modal" href="#" data-target="#modalUpdateUser_{{ $user->USR_ID }}" style="width: 120px;height:120px;" class="rounded-circle" src="{{ asset('assets') }}/img/undraw_profile_1.svg" alt="">
                             @else
                                 <img data-toggle="modal" href="#" data-target="#modalUpdateUser_{{ $user->USR_ID }}" style="width: 120px;height:120px;" class="rounded-circle" src="{{ asset('storage/images/users/'.$user->USR_Photo) }}" alt="">
                             @endif
@@ -149,7 +149,7 @@
                                         <div class="invosice-logo">
                                             <span class="user-image">
                                                 @if ($user->USR_Photo == "" || $user->USR_Photo == null)
-                                                    <img id="targetimg" style="width: 130px;height:130px;" class="rounded-circle img-fluid img-thumbnail" src="{{ asset('assets') }}/images/avtar/{{ $user->USR_Gender == 'male' ? 'user.png' : 'woman.png' }}" alt="">
+                                                    <img id="targetimg" style="width: 130px;height:130px;" class="rounded-circle img-fluid img-thumbnail" src="{{ asset('assets') }}/img/undraw_profile_1.svg" alt="">
                                                 @else
                                                     <img id="targetimg" style="width: 130px;height:130px;" class="rounded-circle img-fluid img-thumbnail" src="{{ asset('storage/images/users/'.$user->USR_Photo) }}" alt="">
                                                 @endif
