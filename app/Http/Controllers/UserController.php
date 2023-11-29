@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\FamilyMember;
+use App\Models\FamilyMemberCars;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -147,6 +148,24 @@ class UserController extends Controller
                 return redirect()->route('manage_family')->with('danger','Echec de création du membre.')->withInput();
 
             }
+            
+            if($request->has('setCar')){
+
+                $parent = FamilyMember::find($input['member']);
+               
+                $newcar = new FamilyMemberCars();
+                $newcar->FAM_ID = $input['member'];
+                $newcar->CAR_ID = $input['carid'];
+
+                $saveResult = $newcar->save();
+
+                if ($saveResult) {
+
+                    return redirect()->route('manage_family')->with('success','Le véhicule a été attribué.')->withInput();
+                }
+                return redirect()->route('manage_family')->with('danger','Echec de création du véhicule.')->withInput();
+
+            }
            
 
         }catch(\Throwable $th){
@@ -155,7 +174,6 @@ class UserController extends Controller
         }
 
         $members = $user->familyMembers;
-        $roles = Role::all();
 
         $data = [
             'user' => $user,

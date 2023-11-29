@@ -43,6 +43,12 @@
                 <span>Gestion de la famille</span>
             </a>
         </li>
+       
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('manage_user_cars',['id'=>session('userdata')->USR_ID]) }}"> <i class="fas fa-fw fa-car"></i>
+                <span>Gestion des véhicules</span>
+            </a>
+        </li>
         
     @endif
 

@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $created_at
  * @property string $updated_at
  * @property User $user
- * @property FamilyMembersCar[] $familyMembersCars
+ * @property FamilyMemberCars[] $FamilyMemberCars
  */
 class Car extends Model
 {
@@ -43,8 +43,8 @@ class Car extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function familyMembersCars(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function FamilyMemberCars(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany('App\Models\FamilyMembersCar', 'CAR_ID', 'CAR_ID');
+        return $this->hasMany('App\Models\FamilyMemberCars', 'CAR_ID', 'CAR_ID');
     }
 }
