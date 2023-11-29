@@ -15,6 +15,8 @@ Route::prefix('auth')->group(function () {
     Route::get('sign-up', [AuthController::class,'signUp'])->name('signUp')->middleware('unauthenticated');
     Route::post('sign-up', [AuthController::class,'signUp'])->name('signUpPost')->middleware('unauthenticated');
 
+    Route::get('logout', [AuthController::class,'logout'])->name('logout');
+
 });
 
 Route::prefix('user')->group(function () {
