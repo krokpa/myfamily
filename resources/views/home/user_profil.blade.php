@@ -90,12 +90,6 @@
                                         <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Role</p>
                                         <p class="col-sm-9">{{ $user->role->ROLE_Libelle ?? "" }}</p>
                                     </div>
-                                    <div class="row">
-                                        <p class="col-sm-3 text-muted text-sm-end mb-0">Code Utilisateur</p>
-                                        <p class="col-sm-9 mb-0">
-                                            {{   $user->USR_Code }}
-                                        </p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -184,36 +178,11 @@
                             </div>
                             
                             <div class="row">
-                                
-                                <div class="col-6 col-sm-6 col-lg-6">
-                                    <div class="form-group local-forms">
-                                        <label>Code  <span class="login-danger">*</span></label>
-                                        <input type="text" required class="form-control form-control-sm" name="USR_Code" value="{{ $user->USR_Code ?? strtoupper(uniqid()) }}">
-                                    </div>
-                                </div>
-    
+                              
                                 <div class="col-6 col-sm-6 col-lg-6">
                                     <div class="form-group local-forms">
                                         <label>Email <span class="login-danger"></span></label>
                                         <input type="text" class="form-control form-control-sm" name="USR_Email" value="{{ $user->USR_Email }}">
-                                    </div>
-                                </div>
-    
-                            </div>
-                            
-                            <div class="row">
-                            
-                                <div class="col-6 col-sm-6 col-lg-6">
-                                    <div class="form-group local-forms">
-                                        <label>Contact<span class="login-danger"></span></label>
-                                        <input type="text" required class="form-control form-control-sm" name="USR_Contact" value="{{ $user->USR_Contact }}">
-                                    </div>
-                                </div>
-                                
-                                <div class="col-6 col-sm-6 col-lg-6">
-                                    <div class="form-group local-forms">
-                                        <label>Whatsapp <span class="login-danger"></span></label>
-                                        <input type="text" required class="form-control form-control-sm" name="USR_Whatsapp" value="{{ $user->USR_Whatsapp }}">
                                     </div>
                                 </div>
     
@@ -229,23 +198,6 @@
                                                 <label class="file-upload image-upbtn mb-0"> Sélectionner le fichier <input type="file" id="USR_Photo" name="USR_Photo" accept="image/*" /> </label>
                                             </div>
                                         {{-- </div> --}}
-                                    </div>
-                                </div>
-    
-                                <div class="col-6 col-sm-6 col-lg-6">
-                                    <div class="form-group local-forms">
-                                        <label>Role<span class="login-danger">*</span></label>
-                                        
-                                        <select style="width:100%;" name="ROLE_ID" class="form-control select2">
-                                            @foreach ($roles ?? [] as $role)
-                                                @if ($role->ROLE_ID  == $user->role->ROLE_ID)
-                                                    <option selected="" value="{{ $role->ROLE_ID }}"> {{ $role->ROLE_Libelle }}</option>
-                                                @else
-                                                    <option value="{{ $role->ROLE_ID }}"> {{ $role->ROLE_Libelle }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-    
                                     </div>
                                 </div>
     
