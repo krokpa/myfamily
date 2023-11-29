@@ -1,18 +1,33 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\UserController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/', [IndexController::class,'index'])->name('index')->middleware('unauthenticated');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('auth')->group(function () {
+
+    Route::get('sign-in', [AuthController::class,'signIn'])->name('signIn')->middleware('unauthenticated');
+    Route::post('sign-in', [AuthController::class,'signIn'])->name('signInPost')->middleware('unauthenticated');
+    
+    Route::get('sign-up', [AuthController::class,'signUp'])->name('signUp')->middleware('unauthenticated');
+    Route::post('sign-up', [AuthController::class,'signUp'])->name('signUpPost')->middleware('unauthenticated');
+
 });
+
+Route::prefix('user')->group(function () {
+
+    Route::get('home', [UserController::class,'home'])->name('user_home')->middleware('authenticated');
+    
+});
+
+Route::get('users', [UserController::class,'users'])->name('manage_users')->middleware('authenticated');
+Route::post('users', [UserController::class,'users'])->name('manage_users_post')->middleware('authenticated');
+
+Route::get('family', [UserController::class,'family'])->name('manage_family')->middleware('authenticated');
+Route::post('family', [UserController::class,'family'])->name('manage_family_post')->middleware('authenticated');
+
+Route::get('user/cars/{id}', [UserController::class,'userCars'])->name('manage_user_cars')->middleware('authenticated');
+Route::post('user/cars/{id}', [UserController::class,'userCars'])->name('manage_user_cars_post')->middleware('authenticated');
